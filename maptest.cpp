@@ -1,4 +1,4 @@
-#include "map.cpp"
+#include "./map/map.cpp"
 #include<ncurses.h>
 #include<string>
 #include<iostream>
