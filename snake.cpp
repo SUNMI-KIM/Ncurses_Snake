@@ -6,6 +6,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+using namespace std;
+
 class Stage { //main 화면 부터 stage까지 생성.
 public:
 	int sx, sy; //stage window 생성 위치
@@ -14,7 +16,6 @@ public:
 	Stage();
 	void InitHome();// 처음 시작화면(윈도우 생성)
 	void Stage_1(); // First Stage
-	void Mission(WINDOW* mission);
 };
 
 class Snake {
@@ -23,13 +24,8 @@ public:
     int set_x, set_y; // Snake 생성 좌표 지정.
     int min_len = 3;
     int max_len = 12; // Snake 최소 최대 길이 지정.
-    vector <pair<int, int>> body; //Snake의 몸 좌표 저장. 0(head) ~ -1(tail)
-    int item_pos[3][4] = { 0 }; //grow item이 생성 될 좌표를 저장할 배열.(poison or grow)
-    int item_n = 0; //grow 의 개수
-    int itemType = 0;
-    char item_shape[2] = { '5', '6' };
+    vector<pair<int, int>> body; //Snake의 몸 좌표 저장. 0(head) ~ -1(tail)
     int h, w;
-    int gate[2][3];
 
     char map[1][32][63] = {
       {
@@ -75,7 +71,7 @@ public:
     bool UnableItem(int stage_num, int p1, int p2); // 아이템이 생성 가능한 지 확인.
     
     void ShowWin(WINDOW* w1);
-    void Game(WINDOW* w1, WINDOW* score, WINDOW* mission, int stage_num);// 게임 시작!
+    void Game(WINDOW* w1, WINDOW* score, int stage_num);// 게임 시작!
     void UpdateSnake();// 꼬리부터 머리까지 움직이는 방향으로 좌표 최신
 };
 Snake::Snake(int y, int x, int height, int width) :set_y(y), set_x(x), h(height), w(width) {//생성자
@@ -137,16 +133,13 @@ void Snake::ShowWin(WINDOW* w1) {
         }
     }
 }
-void Snake::Game(WINDOW* w1, WINDOW* score, WINDOW* mission, int stage_num) {
+void Snake::Game(WINDOW* w1, WINDOW* score, int stage_num) {
 
     int d = KEY_RIGHT; // Snake 진행방향
     int old_d = 3;// Snake 이전 진행방향
     int q = 0;
     int g; //gate 들어갔는지 확인 변수
-    Board b;
     int Gcount = 0, Pcount = 0, Gatecount = 0;
-    SpawnItem(stage_num);
-    SpawnGate(stage_num, h, w);
 
     while (1) {
 
@@ -181,10 +174,7 @@ void Snake::Game(WINDOW* w1, WINDOW* score, WINDOW* mission, int stage_num) {
         ShowSnake(stage_num);
         ShowWin(w1);
         wrefresh(w1);
-        b.ScoreBoard(score, body.size(), Gcount, Pcount, Gatecount);
         wrefresh(score);
-        wrefresh(mission);
-
     }
 }
 Stage::Stage() { // 생성자.
@@ -226,8 +216,6 @@ void Stage::Stage_1() {
     WINDOW* s1 = newwin(s1_h, s1_w, sy, sx); //stage1 화면 생성.
     WINDOW* score = newwin(15, 40, 5, 80);
     WINDOW* mission = newwin(15, 40, 21, 80);
-    Mission(mission);
-
     init_pair(2, COLOR_RED, COLOR_BLACK);
     attron(COLOR_PAIR(2));
     wbkgd(s1, COLOR_PAIR(2));
@@ -236,7 +224,7 @@ void Stage::Stage_1() {
     nodelay(s1, TRUE); // 입력을 안 받아도 넘어가게 해 주는 함수.
 
     Snake s(10, 10, s1_h, s1_w); //20, 20위치에 뱀 생성.
-    s.Game(s1, score, mission, 0);
+    s.Game(s1, score, 0);
     getch();
     delwin(s1);
 }
