@@ -41,23 +41,24 @@ class Snake
             {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
             {9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9}
         };
-        void showSnake() {
+        void showSnake() { // Snake의 모양에 따라 map의 원소를 변경
             int l = snake_length;
             int x = head_x;
             int y = head_y;
-            while(l--) {
+            while(l--) {   // Snake head 방향에 따라 새로운 코드 구현 필요
                 map[x][y++] = 3;
             }   
         }
-        void snakeGrow() {
+        void snakeGrow() { // Snake 길이 늘어나야하는 순간에 수동적으로 실행해야 하는 함수
             snake_length++;
         }
 };
 
 int main(){
-    Snake MainSnake = Snake(15, 20);
-    MainSnake.showSnake();
+    Snake MainSnake = Snake(15, 20); // Snake head 초기에 가장 중앙에 배치함
 
+    MainSnake.showSnake();           // 변경사항 생길 때마다 실행해야함 -> 추후 while loop 안에 배치
+    
     string s = "";
     for(int i=0; i<30; i++){
         for(int j=0; j<40; j++){
@@ -75,7 +76,7 @@ int main(){
     refresh();
     getch();
     endwin();
-    
+
     return 0;
 
 }
