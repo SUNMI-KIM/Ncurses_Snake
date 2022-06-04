@@ -73,7 +73,7 @@ int main(){
     attroff(COLOR_PAIR(1));
     refresh();
 
-    WINDOW *w1 = newwin(31, 41, 2, 2);
+    WINDOW *w1 = newwin(32, 52, 10, 2);
     mvwprintw(w1, 6, 6, c);
     wrefresh(w1);
     
