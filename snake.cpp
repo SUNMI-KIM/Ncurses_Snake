@@ -76,6 +76,7 @@ int main(){
 
     WINDOW *w1 = newwin(5, 5, 32, 62);
     mvwprintw(w1, 5, 5, c);
+    wrefresh(w1);
     
     WINDOW *score = newwin(15, 40, 5, 80);
     init_pair(3, COLOR_BLACK, COLOR_WHITE);
