@@ -76,6 +76,7 @@ public:
     
     void ShowWin(WINDOW* w1);
     void Game(WINDOW* w1, WINDOW* score, WINDOW* mission, int stage_num);// 게임 시작!
+    void UpdateSnake();// 꼬리부터 머리까지 움직이는 방향으로 좌표 최신
 };
 Snake::Snake(int y, int x, int height, int width) :set_y(y), set_x(x), h(height), w(width) {//생성자
     for (int i = 0; i < 3; i++) {
@@ -95,6 +96,46 @@ bool Snake::CrushBody(int stage_num) { // Snake의 head가 Body에 닿았는지 
         return true;
     }
     return false;
+}
+void Snake::UpdateSnake() { //진행방향으로 Snake 꼬리부터 머리쪽으로 이동해줌.
+    for (int i = body.size() - 1; i > 0; i--) {
+        body[i].first = body[i - 1].first;
+        body[i].second = body[i - 1].second;
+    }
+}
+void Snake::ShowWin(WINDOW* w1) {
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            switch (map[0][i][j]) {
+            case 48:
+                mvwaddch(w1, i, j, ' ');
+                break;
+            case 49:
+                mvwaddch(w1, i, j, '-');
+                break;
+            case 50:
+                mvwaddch(w1, i, j, 'X');
+                break;
+            case 51:
+                mvwaddch(w1, i, j, 'H');
+                break;
+            case 52:
+                mvwaddch(w1, i, j, 'B');
+                break;
+            case 53:
+                mvwaddch(w1, i, j, 'G');
+                break;
+            case 54:
+                mvwaddch(w1, i, j, 'P');
+                break;
+            case 55:
+                mvwaddch(w1, i, j, 'A');
+                break;
+            case 57:
+                mvwaddch(w1, i, j, ' ');
+            }
+        }
+    }
 }
 void Snake::Game(WINDOW* w1, WINDOW* score, WINDOW* mission, int stage_num) {
 
