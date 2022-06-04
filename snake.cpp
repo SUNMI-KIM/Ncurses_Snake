@@ -72,10 +72,9 @@ int main(){
     attron(COLOR_PAIR(1));
     attroff(COLOR_PAIR(1));
     refresh();
-    getch();
 
     WINDOW *w1 = newwin(5, 5, 32, 62);
-    mvwprintw(w1, 5, 5, c);
+    mvwprintw(w1, 6, 6, c);
     wrefresh(w1);
     
     WINDOW *score = newwin(15, 40, 5, 80);
@@ -102,6 +101,7 @@ int main(){
     mvwprintw(mission, 6, 3, "gate: %d", MainSnake.snake_length);
     wrefresh(mission);
 
+    getch();
     endwin();
     
     return 0;
