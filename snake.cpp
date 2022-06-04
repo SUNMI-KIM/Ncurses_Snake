@@ -70,10 +70,12 @@ int main(){
     start_color();
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
     attron(COLOR_PAIR(1));
-    printw(c);
     attroff(COLOR_PAIR(1));
     refresh();
     getch();
+
+    WINDOW *w1 = newwin(5, 5, 32, 62);
+    mvwprintw(w1, 5, 5, c);
     
     WINDOW *score = newwin(15, 40, 5, 80);
     init_pair(3, COLOR_BLACK, COLOR_WHITE);
@@ -98,7 +100,6 @@ int main(){
     mvwprintw(mission, 5, 3, "poison: %d", MainSnake.snake_length);
     mvwprintw(mission, 6, 3, "gate: %d", MainSnake.snake_length);
     wrefresh(mission);
-
 
     endwin();
     
